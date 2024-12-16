@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  easy_store:
+    container_name: easy_store
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: "your_password"
+      POSTGRES_USER: easystore
+      POSTGRES_DB: easystore
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+volumes:
+  pgdata: {}
