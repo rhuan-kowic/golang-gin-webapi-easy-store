@@ -20,6 +20,8 @@ func main() {
 	fmt.Println("Conexão com o banco de dados estabelecida com sucesso!")
 
 	ProductRepository := repository.NewProductRepository(db)
+	SaleRepository := repository.NewSaleRepository(db)
+
 	server.GET("/home", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "Easy Store",
@@ -33,6 +35,14 @@ func main() {
 			return
 		}
 		ctx.JSON(http.StatusOK, products)
+	})
+	server.GET("/sales", func(ctx *gin.Context) {
+		sales, err := repository.GetSales(&SaleRepository)
+		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, err)
+			return
+		}
+		ctx.JSON(http.StatusOK, sales)
 	})
 	server.Run(":3000")
 }
