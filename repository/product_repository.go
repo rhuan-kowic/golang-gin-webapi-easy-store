@@ -17,12 +17,12 @@ func NewProductRepository(connection *sql.DB) ProductRepository {
 	}
 }
 
-func GetProducts(pr *ProductRepository) ([]model.Product, error) {
+func (pr *ProductRepository) GetProducts() ([]model.Product, error) {
 	query := "SELECT id_product, name, description, price, stock_quantity, minimum_stock FROM products"
 
 	rows, err := pr.connection.Query(query)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Erro na consulta: ", err)
 		return []model.Product{}, err
 	}
 
