@@ -22,7 +22,10 @@ func main() {
 
 	ProductRepository := repository.NewProductRepository(db)
 	SaleRepository := repository.NewSaleRepository(db)
+
 	ProductUsecase := usecase.NewProductUseCase(ProductRepository)
+	SaleUsecase := usecase.NewSaleUsecase(&SaleRepository)
+
 	server.GET("/home", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "Easy Store",
@@ -38,7 +41,7 @@ func main() {
 		ctx.JSON(http.StatusOK, products)
 	})
 	server.GET("/sales", func(ctx *gin.Context) {
-		sales, err := repository.GetSales(&SaleRepository)
+		sales, err := SaleUsecase.GetSales()
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, err)
 			return

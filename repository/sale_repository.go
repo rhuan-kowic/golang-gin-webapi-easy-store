@@ -17,11 +17,11 @@ func NewSaleRepository(connection *sql.DB) SaleRepository {
 	}
 }
 
-func GetSales(sr *SaleRepository) ([]model.Sale, error) {
+func (sr *SaleRepository) GetSales() ([]model.Sale, error) {
 	query := "SELECT id_sale, product_id, date_sale, total, quantity FROM sales"
 	rows, err := sr.connection.Query(query)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Erro na consulta: ", err)
 		return []model.Sale{}, err
 	}
 	var saleList []model.Sale
