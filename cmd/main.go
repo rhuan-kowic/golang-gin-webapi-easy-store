@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rhuan-kowic/golang-gin-webapi-easy-store/controllers"
 	"github.com/rhuan-kowic/golang-gin-webapi-easy-store/db"
 	"github.com/rhuan-kowic/golang-gin-webapi-easy-store/repository"
 	"github.com/rhuan-kowic/golang-gin-webapi-easy-store/usecase"
@@ -26,20 +27,14 @@ func main() {
 	ProductUsecase := usecase.NewProductUseCase(ProductRepository)
 	SaleUsecase := usecase.NewSaleUsecase(&SaleRepository)
 
+	ProductController := controllers.NewProductController(ProductUsecase)
 	server.GET("/home", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "Easy Store",
 		})
 	})
 
-	server.GET("/products", func(ctx *gin.Context) {
-		products, err := ProductUsecase.GetProducts()
-		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
-			return
-		}
-		ctx.JSON(http.StatusOK, products)
-	})
+	server.GET("/products", ProductController.GetProducts)
 	server.GET("/sales", func(ctx *gin.Context) {
 		sales, err := SaleUsecase.GetSales()
 		if err != nil {
