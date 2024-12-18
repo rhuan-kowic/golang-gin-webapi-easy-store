@@ -9,9 +9,9 @@ type SaleUsecase struct {
 	repository repository.SaleRepository
 }
 
-func NewSaleUsecase(repo *repository.SaleRepository) SaleUsecase {
+func NewSaleUsecase(repo repository.SaleRepository) SaleUsecase {
 	return SaleUsecase{
-		repository: *repo,
+		repository: repo,
 	}
 }
 
