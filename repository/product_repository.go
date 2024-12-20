@@ -47,3 +47,17 @@ func (pr *ProductRepository) GetProducts() ([]model.Product, error) {
 	rows.Close()
 	return productList, nil
 }
+
+func (pr *ProductRepository) CreateProduct(product model.Product) (model.Product, error) {
+	query := `INSERT INTO products (name, description, price, stock_quantity, minimum_stock) 
+          VALUES ($1, $2, $3, $4, $5)`
+
+	_, err := pr.connection.Exec(query, product.Name, product.Description, product.Price, product.StockQuantity, product.MinimumStock)
+
+	if err != nil {
+		fmt.Println("Erro ao inserir o produto: ", err)
+		return product, err
+	}
+
+	return product, nil
+}

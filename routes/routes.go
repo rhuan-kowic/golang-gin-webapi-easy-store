@@ -15,4 +15,5 @@ func SetupRouter(router *gin.Engine, productUsecase usecase.ProductUsecase, sale
 	// Rotas definidas
 	router.GET("/products", productController.GetProducts)
 	router.GET("/sales", saleController.GetSales)
+	router.POST("/products", productController.CreateProductHandler)
 }
