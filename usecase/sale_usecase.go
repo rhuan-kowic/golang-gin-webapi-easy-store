@@ -18,3 +18,7 @@ func NewSaleUsecase(repo repository.SaleRepository) SaleUsecase {
 func (su *SaleUsecase) GetSales() ([]model.Sale, error) {
 	return su.repository.GetSales()
 }
+
+func (su *SaleUsecase) CreateSale(sale model.Sale) (model.Sale, error) {
+	return su.repository.CreateSale(sale)
+}

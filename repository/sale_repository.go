@@ -44,3 +44,13 @@ func (sr *SaleRepository) GetSales() ([]model.Sale, error) {
 	}
 	return saleList, nil
 }
+
+func (sr *SaleRepository) CreateSale(sale model.Sale) (model.Sale, error) {
+	query := `INSERT INTO sales (product_id, date_sale, total, quantity) VALUES ($1, $2, $3, $4)`
+	_, err := sr.connection.Exec(query, sale.ProductID, sale.DateSale, sale.Total, sale.Quantity)
+	if err != nil {
+		fmt.Println("Erro ao inserir a venda: ", err)
+		return sale, err
+	}
+	return sale, nil
+}
